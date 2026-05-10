@@ -1,0 +1,15 @@
+version: "3.9"
+
+services:
+
+  smart-irrigation-api:
+
+    build: .
+
+    container_name: smart_irrigation_container
+
+    ports:
+      - "8000:8000"
+
+    volumes:
+      - .:/app
