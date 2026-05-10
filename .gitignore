@@ -1,0 +1,12 @@
+venv/
+__pycache__/
+*.pyc
+
+models/
+plots/
+experiments/
+logs/
+
+.vscode/
+
+mlruns/
