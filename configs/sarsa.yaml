@@ -1,0 +1,11 @@
+learning_rate: 0.05
+discount_factor: 0.99
+epsilon: 0.10
+
+episodes: 1000
+steps_per_episode: 20
+
+experiment_name: "SARSA_MLflow"
+
+model_path: "models/sarsa_q_table.pkl"
+plot_path: "plots/sarsa_rewards.png"

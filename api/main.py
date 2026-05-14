@@ -1,11 +1,25 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
-import logging
 
+import logging
 import pickle
+import os
+
+from dotenv import load_dotenv
 
 from sim.q_learning_agent import QLearningAgent
 
+
+# ======================================
+# LOAD ENV VARIABLES
+# ======================================
+
+load_dotenv()
+
+
+# ======================================
+# LOGGING CONFIGURATION
+# ======================================
 
 logging.basicConfig(
     filename="logs/predictions.log",
@@ -13,11 +27,12 @@ logging.basicConfig(
     format="%(asctime)s - %(message)s"
 )
 
+
 # ======================================
 # LOAD TRAINED MODEL
 # ======================================
 
-model_path = "models/q_learning_tuned_v1_qtable.pkl"
+model_path = os.getenv("MODEL_PATH")
 
 agent = QLearningAgent()
 
@@ -30,7 +45,11 @@ with open(model_path, "rb") as file:
 # CREATE FASTAPI APP
 # ======================================
 
-app = FastAPI()
+app = FastAPI(
+    title="Smart Irrigation API",
+    description="Reinforcement Learning based Smart Irrigation Optimization System",
+    version="1.0"
+)
 
 
 # ======================================
@@ -42,6 +61,19 @@ class IrrigationInput(BaseModel):
     soil_moisture: int
     temperature: int
     rainfall: int
+
+
+# ======================================
+# ROOT ROUTE
+# ======================================
+
+@app.get("/")
+
+def home():
+
+    return {
+        "message": "Smart Irrigation API Running Successfully"
+    }
 
 
 # ======================================
@@ -61,14 +93,22 @@ def predict(data: IrrigationInput):
     action = agent.choose_action(state)
 
     if action == 1:
+
         decision = "Irrigate"
 
     else:
+
         decision = "Do Not Irrigate"
 
+    # ======================================
+    # LOG PREDICTIONS
+    # ======================================
+
     logging.info(
-    f"State: {state} | Action: {action} | Decision: {decision}"
-)
+        f"State: {state} | "
+        f"Action: {action} | "
+        f"Decision: {decision}"
+    )
 
     return {
 

@@ -1,0 +1,11 @@
+learning_rate: 0.05
+discount_factor: 0.99
+epsilon: 0.10
+
+episodes: 1000
+steps_per_episode: 20
+
+experiment_name: "Q_Learning_MLflow"
+
+model_path: "models/q_table.pkl"
+plot_path: "plots/q_learning_rewards.png"

@@ -1,0 +1,14 @@
+learning_rate: 0.001
+discount_factor: 0.99
+epsilon: 0.10
+
+episodes: 500
+steps_per_episode: 20
+
+batch_size: 32
+memory_size: 10000
+
+experiment_name: "DQN_MLflow"
+
+model_path: "models/dqn_model.pth"
+plot_path: "plots/dqn_rewards.png"
